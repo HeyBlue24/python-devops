@@ -61,7 +61,7 @@ pipeline {
                 script {
                     // Run terraform plan to see the proposed changes
                     dir('terraform') {
-                        sh 'terraform plan -out=tfplan'
+                        sh 'terraform plan -lock=false'
                     }
                 }
             }
