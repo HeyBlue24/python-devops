@@ -7,6 +7,7 @@ pipeline {
         TAG_NAME = 'latest'                   // Default tag name (you can customize it)
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
         DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Reference to the Docker token stored in Jenkins
+     
     }
 
     stages {
@@ -14,7 +15,6 @@ pipeline {
             steps {
                 // Clone the public GitHub repository to Jenkins workspace
                 git url: 'https://github.com/HeyBlue24/python-devops.git', branch: 'main'
-
             }
         }
 
@@ -44,15 +44,51 @@ pipeline {
                 }
             }
         }
+
+        stage('Initialize Terraform') {
+            steps {
+                script {
+                    // Initialize Terraform (downloads provider plugins, etc.)
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                script {
+                    // Run terraform plan to see the proposed changes
+                    sh 'terraform plan -out=tfplan'
+                }
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    // Apply the Terraform plan to create/update resources
+                    sh 'terraform apply -auto-approve tfplan'
+                }
+            }
+        }
+
+        stage('Terraform Output') {
+            steps {
+                script {
+                    // Display output from Terraform
+                    sh 'terraform output'
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo "Docker image pushed successfully to Docker Hub!"
+            echo "Pipeline completed successfully!"
         }
 
         failure {
-            echo "Build or Push failed. Please check the logs."
+            echo "Pipeline failed. Check logs for more details."
         }
     }
 }
