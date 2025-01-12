@@ -10,9 +10,6 @@ COPY . .
 # Install Python dependencies
 RUN pip install Flask
 
-# Copy application code
-COPY python/ .
-
 # Expose port 5000
 EXPOSE 5000
 
