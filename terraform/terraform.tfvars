@@ -1,0 +1,5 @@
+subscription_id     = "a90b43a8-31d2-4b87-ae67-0cde6d6cffa5"
+resource_group_name = "devops-rg"
+location            = "East US"
+vm_admin_username   = "azureuser"
+vm_admin_password   = "YourStrongPassword123!"
