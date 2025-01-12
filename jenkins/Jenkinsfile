@@ -50,7 +50,7 @@ pipeline {
                 script {
                     // Navigate to the terraform folder and initialize Terraform
                     dir('terraform') {
-                        sh 'terraform init'
+                        sh 'terraform init -migrate-state'
                     }
                 }
             }
