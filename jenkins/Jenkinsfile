@@ -7,7 +7,7 @@ pipeline {
         TAG_NAME = 'latest'                   // Default tag name (you can customize it)
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
         DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Reference to the Docker token stored in Jenkins
-     
+        TERRAFORM_VERSION = '1.3.0'           // Terraform version (adjust as needed)
     }
 
     stages {
@@ -48,8 +48,10 @@ pipeline {
         stage('Initialize Terraform') {
             steps {
                 script {
-                    // Initialize Terraform (downloads provider plugins, etc.)
-                    sh 'terraform init'
+                    // Navigate to the terraform folder and initialize Terraform
+                    dir('terraform') {
+                        sh 'terraform init'
+                    }
                 }
             }
         }
@@ -58,7 +60,9 @@ pipeline {
             steps {
                 script {
                     // Run terraform plan to see the proposed changes
-                    sh 'terraform plan -out=tfplan'
+                    dir('terraform') {
+                        sh 'terraform plan -out=tfplan'
+                    }
                 }
             }
         }
@@ -67,7 +71,9 @@ pipeline {
             steps {
                 script {
                     // Apply the Terraform plan to create/update resources
-                    sh 'terraform apply -auto-approve tfplan'
+                    dir('terraform') {
+                        sh 'terraform apply -auto-approve tfplan'
+                    }
                 }
             }
         }
@@ -76,7 +82,9 @@ pipeline {
             steps {
                 script {
                     // Display output from Terraform
-                    sh 'terraform output'
+                    dir('terraform') {
+                        sh 'terraform output'
+                    }
                 }
             }
         }
