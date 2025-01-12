@@ -3,7 +3,7 @@
 # Azure authentication details
 client_id        = "a90b43a8-31d2-4b87-ae67-0cde6d6cffa5"
 client_secret    = "gFMma1leQkrlT0Rby7jmauXFosAIjhzb6F"
-tenant_id        = "cab5b605-7f4a-4c68-9761-311b7793390f"
+tenant_id        = "56f7c350-8b87-4ca9-b7ac-3575ef4e8006"
 subscription_id  = "a90b43a8-31d2-4b87-ae67-0cde6d6cffa5"
 
 # Kubernetes cluster details
