@@ -1,8 +1,8 @@
 # terraform.tfvars
 
 # Azure authentication details
-client_id        = "a90b43a8-31d2-4b87-ae67-0cde6d6cffa5"
-client_secret    = "gFMma1leQkrlT0Rby7jmauXFosAIjhzb6F"
+client_id        = "f550c193-6676-4c08-aa03-c60d7748fe2f"
+client_secret    = "UFK8Q~awe.tX1JYOdTbOh5CHBS572HRXB60QvdgC"
 tenant_id        = "56f7c350-8b87-4ca9-b7ac-3575ef4e8006"
 subscription_id  = "a90b43a8-31d2-4b87-ae67-0cde6d6cffa5"
 
