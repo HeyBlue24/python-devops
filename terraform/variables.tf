@@ -1,45 +1,50 @@
-######
+# variables.tf
 
-variable "resource_group_name" {
-  description = "Name of the resource group"
-  type        = string
-}
-
-variable "location" {
-  description = "Azure region for deployment"
-  type        = string
-  default     = "East US"
-}
-
-variable "vm_size" {
-  description = "Size of the virtual machine"
-  type        = string
-  default     = "Standard_B2s"
-}
-
-variable "vm_admin_username" {
-  description = "Admin username for the VM"
-  type        = string
-}
-
-variable "vm_admin_password" {
-  description = "Admin password for the VM"
+variable "client_id" {
+  description = "The Azure client ID"
   type        = string
   sensitive   = true
 }
 
+variable "client_secret" {
+  description = "The Azure client secret"
+  type        = string
+  sensitive   = true
+}
+
+variable "tenant_id" {
+  description = "The Azure tenant ID"
+  type        = string
+  sensitive   = true
+}
+
+variable "subscription_id" {
+  description = "The Azure subscription ID"
+  type        = string
+}
+
+variable "resource_group_name" {
+  description = "The name of the Azure resource group"
+  type        = string
+}
+
+variable "location" {
+  description = "The location/region to create resources in"
+  type        = string
+}
+
 variable "aks_node_count" {
-  description = "Number of worker nodes in the AKS cluster"
+  description = "The number of nodes in the AKS cluster"
   type        = number
-  default     = 1
 }
 
 variable "aks_node_size" {
-  description = "Size of the worker nodes"
+  description = "The size of the AKS nodes"
   type        = string
-  default     = "Standard_B2s"
 }
-variable "subscription_id" {
-  description = "The ID of the Azure subscription to use"
+
+variable "vm_admin_password" {
+  description = "The admin password for the virtual machine"
   type        = string
+  sensitive   = true
 }
