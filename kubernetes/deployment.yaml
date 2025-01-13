@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: python-app
-        image: uthaya1997/my-python-app:latest  # Replace with your Docker image name
+        image: docker.io/uthaya1997/my-python-app:latest  # Replace with your Docker image name
         ports:
         - containerPort: 5000
