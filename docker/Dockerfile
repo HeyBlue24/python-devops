@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the application code to the container
 # Copy the app.py file
-COPY .
+COPY app.py .
 
 # Copy the requirements.txt file
 
