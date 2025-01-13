@@ -9,7 +9,7 @@ WORKDIR /app
 COPY docker/app.py .
 
 # Copy the requirements.txt file
-
+COPY docker/requirements.txt .
 
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
