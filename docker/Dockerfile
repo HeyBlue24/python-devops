@@ -6,10 +6,10 @@ WORKDIR /app
 
 # Copy the application code to the container
 # Copy the app.py file
-COPY app.py .
+COPY .
 
 # Copy the requirements.txt file
-COPY requirements.txt .
+
 
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
