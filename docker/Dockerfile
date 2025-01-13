@@ -6,10 +6,10 @@ WORKDIR /app
 
 # Copy the application code to the container
 # Copy the app.py file
-COPY app.py .
+COPY app.py /docker
 
 # Copy the requirements.txt file
-COPY requirements.txt .
+COPY requirements.txt /docker
 
 # Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
