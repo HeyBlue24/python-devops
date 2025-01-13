@@ -4,10 +4,9 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'         // Docker Hub registry URL
         IMAGE_NAME = 'my-python-app'          // Image name in Docker Hub
-        TAG_NAME = 'v2'                   // Default tag name (you can customize it)
+        TAG_NAME = 'v2'                       // Default tag name (you can customize it)
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
-        DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Reference to the Docker token stored in Jenkins
-        TERRAFORM_VERSION = '1.3.0'           // Terraform version (adjust as needed)
+        DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Docker Hub token from Jenkins credentials
         RESOURCE_GROUP = 'Jenkins'            // Azure Resource Group
         AKS_CLUSTER_NAME = 'Jenkins-aks'      // Name of the AKS cluster
     }
@@ -15,6 +14,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
+                // Clone the GitHub repository
                 git url: 'https://github.com/HeyBlue24/python-devops.git', branch: 'main'
             }
         }
@@ -22,6 +22,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    // Build Docker image with specified tag
                     sh 'docker build -t ${DOCKER_REGISTRY}/${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG_NAME} -f docker/Dockerfile .'
                 }
             }
@@ -30,6 +31,7 @@ pipeline {
         stage('Login to Docker Hub') {
             steps {
                 script {
+                    // Authenticate to Docker Hub
                     sh "echo ${DOCKERHUB_TOKEN} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin"
                 }
             }
@@ -38,64 +40,16 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
+                    // Push Docker image to Docker Hub
                     sh 'docker push ${DOCKER_REGISTRY}/${DOCKERHUB_USERNAME}/${IMAGE_NAME}:${TAG_NAME}'
                 }
             }
         }
 
-        # stage('Initialize Terraform') {
-        #     steps {
-        #         script {
-        #             dir('terraform') {
-        #                 sh 'terraform init -migrate-state'
-        #             }
-        #         }
-        #     }
-        # }
-
-        # stage('Terraform Validate') {
-        #     steps {
-        #         script {
-        #             dir('terraform') {
-        #                 sh 'terraform validate'
-        #             }
-        #         }
-        #     }
-        # }
-
-        # stage('Terraform Plan') {
-        #     steps {
-        #         script {
-        #             dir('terraform') {
-        #                 sh 'terraform plan -lock=false'
-        #             }
-        #         }
-        #     }
-        # }
-
-        # stage('Terraform Apply') {
-        #     steps {
-        #         script {
-        #             dir('terraform') {
-        #                 sh 'terraform apply -auto-approve'
-        #             }
-        #         }
-        #     }
-        # }
-
-        # stage('Terraform Output') {
-        #     steps {
-        #         script {
-        #             dir('terraform') {
-        #                 sh 'terraform output'
-        #             }
-        #         }
-        #     }
-        # }
-
         stage('Get AKS Credentials') {
             steps {
                 script {
+                    // Fetch AKS credentials to interact with the cluster
                     sh "az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME}"
                 }
             }
@@ -104,6 +58,7 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
+                    // Deploy application to AKS
                     dir('kubernetes') {
                         sh 'kubectl apply -f deployment.yaml'
                         sh 'kubectl apply -f service.yaml'
@@ -115,17 +70,18 @@ pipeline {
 
     post {
         success {
+            // Actions to perform on successful pipeline execution
             echo "Pipeline completed successfully!"
         }
 
         failure {
+            // Actions to perform on pipeline failure
             echo "Pipeline failed. Check logs for more details."
         }
 
         always {
-            // Optional clean-up or post-build actions
+            // Optional cleanup or post-build actions
             echo "Cleaning up resources or temporary files."
         }
     }
 }
-
