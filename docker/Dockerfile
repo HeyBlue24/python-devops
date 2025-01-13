@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the application code to the container
 # Copy the app.py file
-COPY app.py .
+COPY docker/app.py .
 
 # Copy the requirements.txt file
 
