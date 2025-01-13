@@ -72,7 +72,7 @@ pipeline {
                 script {
                     // Apply the Terraform plan to create/update resources
                     dir('terraform') {
-                        sh 'terraform apply -auto-approve tfplan'
+                        sh 'terraform apply -auto-approve'
                     }
                 }
             }
