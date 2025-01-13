@@ -43,55 +43,55 @@ pipeline {
             }
         }
 
-        stage('Initialize Terraform') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh 'terraform init -migrate-state'
-                    }
-                }
-            }
-        }
+        # stage('Initialize Terraform') {
+        #     steps {
+        #         script {
+        #             dir('terraform') {
+        #                 sh 'terraform init -migrate-state'
+        #             }
+        #         }
+        #     }
+        # }
 
-        stage('Terraform Validate') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh 'terraform validate'
-                    }
-                }
-            }
-        }
+        # stage('Terraform Validate') {
+        #     steps {
+        #         script {
+        #             dir('terraform') {
+        #                 sh 'terraform validate'
+        #             }
+        #         }
+        #     }
+        # }
 
-        stage('Terraform Plan') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh 'terraform plan -lock=false'
-                    }
-                }
-            }
-        }
+        # stage('Terraform Plan') {
+        #     steps {
+        #         script {
+        #             dir('terraform') {
+        #                 sh 'terraform plan -lock=false'
+        #             }
+        #         }
+        #     }
+        # }
 
-        stage('Terraform Apply') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh 'terraform apply -auto-approve'
-                    }
-                }
-            }
-        }
+        # stage('Terraform Apply') {
+        #     steps {
+        #         script {
+        #             dir('terraform') {
+        #                 sh 'terraform apply -auto-approve'
+        #             }
+        #         }
+        #     }
+        # }
 
-        stage('Terraform Output') {
-            steps {
-                script {
-                    dir('terraform') {
-                        sh 'terraform output'
-                    }
-                }
-            }
-        }
+        # stage('Terraform Output') {
+        #     steps {
+        #         script {
+        #             dir('terraform') {
+        #                 sh 'terraform output'
+        #             }
+        #         }
+        #     }
+        # }
 
         stage('Get AKS Credentials') {
             steps {
@@ -128,3 +128,4 @@ pipeline {
         }
     }
 }
+
