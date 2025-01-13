@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'         // Docker Hub registry URL
         IMAGE_NAME = 'my-python-app'          // Image name in Docker Hub
-        TAG_NAME = 'latest'                   // Default tag name (you can customize it)
+        TAG_NAME = 'v1'                   // Default tag name (you can customize it)
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
         DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Reference to the Docker token stored in Jenkins
         TERRAFORM_VERSION = '1.3.0'           // Terraform version (adjust as needed)
