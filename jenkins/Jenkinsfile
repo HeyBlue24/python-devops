@@ -8,6 +8,8 @@ pipeline {
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
         DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Reference to the Docker token stored in Jenkins
         TERRAFORM_VERSION = '1.3.0'           // Terraform version (adjust as needed)
+        RESOURCE_GROUP = 'Jenkins'  // Azure Resource Group
+        AKS_CLUSTER_NAME = 'Jenkins-aks'   // Name of the AKS cluster
     }
 
     stages {
@@ -85,6 +87,26 @@ pipeline {
                     dir('terraform') {
                         sh 'terraform output'
                     }
+                }
+            }
+        }
+
+        stage('Get AKS Credentials') {
+            steps {
+                script {
+                    // Get AKS credentials using Azure CLI
+                    
+                    sh "az aks get-credentials --resource-group ${RESOURCE_GROUP} --name ${AKS_CLUSTER_NAME}"
+                }
+            }
+        }
+
+        stage('Deploy to AKS') {
+            steps {
+                script {
+                    // Deploy to AKS using kubectl
+                    sh 'kubectl apply -f kubernetes/deployment.yaml'
+                    sh 'kubectl apply -f kubernetes/service.yaml'
                 }
             }
         }
