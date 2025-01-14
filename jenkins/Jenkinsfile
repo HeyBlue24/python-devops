@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'         // Docker Hub registry URL
         IMAGE_NAME = 'my-python-app'          // Image name in Docker Hub
-        TAG_NAME = 'v8'                       // Default tag name (you can customize it)
+        TAG_NAME = 'v10'                       // Default tag name (you can customize it)
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
         DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Docker Hub token from Jenkins credentials
         RESOURCE_GROUP = 'Jenkins'            // Azure Resource Group
