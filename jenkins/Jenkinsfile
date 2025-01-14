@@ -58,10 +58,19 @@ pipeline {
         stage('Deploy to AKS') {
             steps {
                 script {
-                    // Deploy application to AKS
+                    // Deploy application to AKS using the kubernetes folder
                     dir('kubernetes') {
-                        sh 'kubectl apply -f deployment.yaml'
-                        sh 'kubectl apply -f service.yaml'
+                        // Deploy the application (main) deployment and service first
+                        sh 'kubectl apply -f deployment.yaml'  // Main app deployment
+                        sh 'kubectl apply -f service.yaml'     // Main app service
+                        
+                        // Then apply the Prometheus and Grafana files
+                        sh 'kubectl apply -f namespace-monitoring.yaml'
+                        sh 'kubectl apply -f prometheus-config.yaml'
+                        sh 'kubectl apply -f prometheus-deployment.yaml'
+                        sh 'kubectl apply -f prometheus-service.yaml'
+                        sh 'kubectl apply -f grafana-deployment.yaml'
+                        sh 'kubectl apply -f grafana-service.yaml'
                     }
                 }
             }
