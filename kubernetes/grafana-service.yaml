@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 3000
       targetPort: 3000
-  clusterIP: None  # Headless service for Grafana
+  type: LoadBalancer None  # Headless service for Grafana
