@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: python-app
-        image: docker.io/uthaya1997/my-python-app:v14  # Replace with your Docker image name
+        image: docker.io/uthaya1997/my-python-app:v15  # Replace with your Docker image name
         ports:
         - containerPort: 5000
         imagePullPolicy: Always
