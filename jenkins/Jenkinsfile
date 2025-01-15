@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'         // Docker Hub registry URL
         IMAGE_NAME = 'my-python-app'          // Image name in Docker Hub
-        TAG_NAME = 'v11'                       // Default tag name (you can customize it)
+        TAG_NAME = 'v12'                       // Default tag name (you can customize it)
         DOCKERHUB_USERNAME = 'uthaya1997'     // Docker Hub username
         DOCKERHUB_TOKEN = credentials('dockerhub-token')  // Docker Hub token from Jenkins credentials
         RESOURCE_GROUP = 'Jenkins'            // Azure Resource Group
@@ -55,20 +55,48 @@ pipeline {
             }
         }
 
-        stage('Deploy to AKS') {
+        // Kubernetes deployment stages
+        stage('Deploy Namespace') {
             steps {
                 script {
-                    // Deploy application to AKS using the kubernetes folder
+                    // Apply namespace
                     dir('kubernetes') {
-                        // Deploy the application (main) deployment and service first
-                        sh 'kubectl apply -f deployment.yaml'  // Main app deployment
-                        sh 'kubectl apply -f service.yaml'     // Main app service
-                        
-                        // Then apply the Prometheus and Grafana files
                         sh 'kubectl apply -f namespace-monitoring.yaml'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                script {
+                    // Deploy the main application (deployment and service)
+                    dir('kubernetes') {
+                        sh 'kubectl apply -f deployment.yaml'
+                        sh 'kubectl apply -f service.yaml'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Prometheus') {
+            steps {
+                script {
+                    // Deploy Prometheus (config, deployment, and service)
+                    dir('kubernetes') {
                         sh 'kubectl apply -f prometheus-config.yaml'
                         sh 'kubectl apply -f prometheus-deployment.yaml'
                         sh 'kubectl apply -f prometheus-service.yaml'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy Grafana') {
+            steps {
+                script {
+                    // Deploy Grafana (deployment and service)
+                    dir('kubernetes') {
                         sh 'kubectl apply -f grafana-deployment.yaml'
                         sh 'kubectl apply -f grafana-service.yaml'
                     }
