@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-  clusterIP: None  # Headless service for Prometheus scraping
+type: LoadBalancer
